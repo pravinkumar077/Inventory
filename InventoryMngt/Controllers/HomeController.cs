@@ -5,25 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using InventoryMngt.Models;
+using InventoryMngt.Models.Interfaces;
+using InventoryMngt.ViewModels;
 
 namespace InventoryMngt.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly IBookRepository _bookRepository;
+        private readonly IAuthorRepository _authorRepository;
+        private readonly ICustomerRepository _customerRepository;
+
+        public HomeController(IBookRepository bookRepository, IAuthorRepository authorRepository, ICustomerRepository customerRepository)
+        {
+            _bookRepository = bookRepository;
+            _authorRepository = authorRepository;
+            _customerRepository = customerRepository;
+        }
         public IActionResult Index()
         {
-            return View();
-        }
+            var homeVM = new HomeViewModel
+            {
+                CustomersCount = _customerRepository.Count(x => true),
+                AuthorsCount = _authorRepository.Count(x => true),
+                BooksCount = _bookRepository.Count(x => true),
+                LendedBooksCount = _bookRepository.Count(x => x.Borrower != null)
+            };
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("_PartialForm",homeVM);
         }
     }
 }
