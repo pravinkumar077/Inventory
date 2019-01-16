@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InventoryMngt.Models;
+﻿using InventoryMngt.Models;
 using InventoryMngt.Models.Interfaces;
 using InventoryMngt.Models.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -35,8 +30,14 @@ namespace InventoryMngt
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+                
 
+            });
+            services.AddCors(option => option.AddPolicy("MyBlogPolicy", builder => {
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+
+            }));
+            services.AddCors();
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:StudentApplicationDB"]));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
@@ -62,7 +63,7 @@ namespace InventoryMngt
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseCors("MyBlogPolicy");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
