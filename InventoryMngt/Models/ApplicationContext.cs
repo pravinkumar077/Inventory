@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InventoryMngt.Models.Entity;
-
+using InventoryMngt.Models.Entity.ResOrder;
 
 namespace InventoryMngt.Models
 {
@@ -22,7 +22,7 @@ namespace InventoryMngt.Models
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Post> Post { get; set; }
         public  DbSet<OrderItem> OrderItems { get; set; }
-        //public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

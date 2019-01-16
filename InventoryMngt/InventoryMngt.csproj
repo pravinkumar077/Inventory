@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Concret\**" />
+    <Content Remove="Models\Concret\**" />
+    <EmbeddedResource Remove="Models\Concret\**" />
+    <None Remove="Models\Concret\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\Resturent\ItemController.cs" />
     <Compile Remove="Controllers\Resturent\OrderController.cs" />
   </ItemGroup>
@@ -6699,7 +6706,6 @@
 
   <ItemGroup>
     <PackageReference Include="Impatient.EntityFrameworkCore.SqlServer" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
@@ -6710,11 +6716,6 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\bower_components\moment\moment.d.ts" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Models\Concret\" />
   </ItemGroup>
 
 </Project>
